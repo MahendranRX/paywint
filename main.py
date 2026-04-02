@@ -4,6 +4,8 @@ from schemas import ExpenseCreate, ExpenseSchema
 from sqlalchemy.orm import Session
 from models import Expense
 from typing import List
+
+
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
@@ -45,29 +47,29 @@ def update(pk: int, updated: ExpenseCreate,  db: Session = Depends(get_db)):
     db.refresh(expense)
     return expense
 
+# ==============================================Not finished apis=============
+# @app.get("/expenses/month/{year}/{month}/", response_model=List[ExpenseSchema])
+# def get_expenses_by_month(year: int, month: int):
+#     """Retrieves expenses for a specific month/year."""
+#     if not 1 <= month <= 12:
+#         raise HTTPException(
+#             status_code=400, detail="Month must be between 1 and 12")
 
-@app.get("/expenses/month/{year}/{month}/", response_model=List[ExpenseSchema])
-def get_expenses_by_month(year: int, month: int):
-    """Retrieves expenses for a specific month/year."""
-    if not 1 <= month <= 12:
-        raise HTTPException(
-            status_code=400, detail="Month must be between 1 and 12")
-
-    filtered_expenses = [
-        exp for exp in expenses_db
-        if exp.date.year == year and exp.date.month == month
-    ]
-    return filtered_expenses
+#     filtered_expenses = [
+#         exp for exp in expenses_db
+#         if exp.date.year == year and exp.date.month == month
+#     ]
+#     return filtered_expenses
 
 
-@app.get("/totals/")
-def get_totals():
-    """Calculates total expense, total salary, and remaining amount."""
-    total_expense = sum(exp.amount for exp in expenses_db)
-    remaining_amount = TOTAL_SALARY - total_expense
+# @app.get("/totals/")
+# def get_totals():
+#     """Calculates total expense, total salary, and remaining amount."""
+#     total_expense = sum(exp.amount for exp in expenses_db)
+#     remaining_amount = TOTAL_SALARY - total_expense
 
-    return {
-        "total_salary": TOTAL_SALARY,
-        "total_expense": total_expense,
-        "remaining_amount": remaining_amount
-    }
+#     return {
+#         "total_salary": TOTAL_SALARY,
+#         "total_expense": total_expense,
+#         "remaining_amount": remaining_amount
+#     }
