@@ -1,6 +1,6 @@
-from sqlalchemy import Column, Integer, String, Float
+from sqlalchemy import Column, Integer, String, Float, DateTime
 from database import Base
-
+from datetime import date
 
 class Expense(Base):
 
@@ -10,4 +10,4 @@ class Expense(Base):
     name = Column(String, nullable=False)
     amount = Column(Float, nullable=False)
     category = Column(String, nullable=False)
-    
+    date = Column(DateTime)

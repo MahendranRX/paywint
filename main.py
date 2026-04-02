@@ -44,3 +44,30 @@ def update(pk: int, updated: ExpenseCreate,  db: Session = Depends(get_db)):
     db.commit()
     db.refresh(expense)
     return expense
+
+
+@app.get("/expenses/month/{year}/{month}/", response_model=List[Expense])
+def get_expenses_by_month(year: int, month: int):
+    """Retrieves expenses for a specific month/year."""
+    if not 1 <= month <= 12:
+        raise HTTPException(
+            status_code=400, detail="Month must be between 1 and 12")
+
+    filtered_expenses = [
+        exp for exp in expenses_db
+        if exp.date.year == year and exp.date.month == month
+    ]
+    return filtered_expenses
+
+
+@app.get("/totals/")
+def get_totals():
+    """Calculates total expense, total salary, and remaining amount."""
+    total_expense = sum(exp.amount for exp in expenses_db)
+    remaining_amount = TOTAL_SALARY - total_expense
+
+    return {
+        "total_salary": TOTAL_SALARY,
+        "total_expense": total_expense,
+        "remaining_amount": remaining_amount
+    }
