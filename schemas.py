@@ -4,7 +4,7 @@ class ExpenseCreate(BaseModel):
     name: str
     amount: float
     category: str
-    date: date
+    # date: date
 
 
 class ExpenseSchema(ExpenseCreate):

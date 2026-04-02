@@ -3,7 +3,6 @@ from database import SessionLocal, Base, engine
 from schemas import ExpenseCreate, ExpenseSchema
 from sqlalchemy.orm import Session
 from models import Expense
-from typing import List
 
 
 Base.metadata.create_all(bind=engine)

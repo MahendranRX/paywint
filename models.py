@@ -10,4 +10,4 @@ class Expense(Base):
     name = Column(String, nullable=False)
     amount = Column(Float, nullable=False)
     category = Column(String, nullable=False)
-    date = Column(DateTime)
+    # date = Column(DateTime)
