@@ -3,7 +3,7 @@ from database import SessionLocal, Base, engine
 from schemas import ExpenseCreate, ExpenseSchema
 from sqlalchemy.orm import Session
 from models import Expense
-
+from typing import List
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
@@ -46,7 +46,7 @@ def update(pk: int, updated: ExpenseCreate,  db: Session = Depends(get_db)):
     return expense
 
 
-@app.get("/expenses/month/{year}/{month}/", response_model=List[Expense])
+@app.get("/expenses/month/{year}/{month}/", response_model=List[ExpenseSchema])
 def get_expenses_by_month(year: int, month: int):
     """Retrieves expenses for a specific month/year."""
     if not 1 <= month <= 12:
